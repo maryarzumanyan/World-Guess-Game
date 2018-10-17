@@ -1,0 +1,13 @@
+body{
+    background-color: black;
+    color: beige;
+}
+.row{
+    overflow: auto;
+}
+.col-md-6{
+    border: dashed beige;
+    padding: 20px;
+    text-align: center;
+    height: 500px;
+}

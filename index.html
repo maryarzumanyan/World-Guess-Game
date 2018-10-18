@@ -13,8 +13,11 @@
               <img src="assets/images/2-WordGuess.jpg" alt="">
           </div>
           <div class="row">
+            <div class="col-12" id="song-nm"></div>
+          </div>
+          <div class="row">
               <div class="col-md-6">
-                  <img src="assets/images/1.bmp" alt="">
+                  <img id="singer-img" src="assets/images/1.bmp" alt="">
               </div>
               <div class="col-md-6">
                     <p>Press any key to get started!</p>
@@ -30,17 +33,25 @@
           </div>
       </div>
       
+      <audio controls>
+        <source id="au" src="" type="audio/ogg">
+      </audio>
+
       <script type="text/javascript">
         var amountOfWins = document.getElementById("wins");
         var wordToGuess = document.getElementById("word");
         var remainingGuesses = document.getElementById("remaining");
         var guessedLetters = document.getElementById("letters");
+        var singerImage = document.getElementById("singer-img");
+        var song = document.getElementById("au");
+        var songName = document.getElementById("song-nm");
 
         function updateUi() {
             amountOfWins.textContent = hangman.wins;
             wordToGuess.textContent = hangman.currentWordReveal();
             guessedLetters.textContent = hangman.guessedLetters();
             remainingGuesses.textContent = hangman.attemptsLeft;
+            
         }
 
         hangman.newGame();
@@ -49,6 +60,17 @@
         document.onkeyup = function(event)
         {
             hangman.makeGuess(event.key);
+
+            if (hangman.isWordGuessed()) {
+                hangman.wins ++;
+                singerImage.src = hangman.currentImageSrc();
+                songName.textContent = hangman.currentSongName();
+                hangman.newGame();
+            }
+            else if(hangman.isGameOver())
+            {
+                window.alert("Game is Over!\n    _________\n    |         |\n    |         0\n    |        /|\\\n    |        / \\\n    |\n    |");
+            }
             updateUi();
         }
       </script>

@@ -11,3 +11,12 @@ body{
     text-align: center;
     height: 500px;
 }
+
+
+#song-nm{
+    text-align: center;
+    font-family: cursive;
+    color: bisque;
+    font-size: 45px;
+    padding-bottom: 20px;
+}

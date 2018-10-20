@@ -33,7 +33,7 @@
           </div>
       </div>
       
-      <audio controls>
+      <audio id="player" controls autoplay loop="1">
         <source id="au" src="" type="audio/ogg">
       </audio>
 
@@ -44,17 +44,27 @@
         var guessedLetters = document.getElementById("letters");
         var singerImage = document.getElementById("singer-img");
         var song = document.getElementById("au");
+        var player = document.getElementById("player");
         var songName = document.getElementById("song-nm");
 
+        // Every letter input UI updates
         function updateUi() {
             amountOfWins.textContent = hangman.wins;
             wordToGuess.textContent = hangman.currentWordReveal();
             guessedLetters.textContent = hangman.guessedLetters();
             remainingGuesses.textContent = hangman.attemptsLeft;
-            
         }
 
+        // Every new game UI updates
+        function updateAudio() {
+            song.src = hangman.currentSongSrc();
+            player.load();
+            player.play();
+        }
+
+        // startup code
         hangman.newGame();
+        updateAudio();
         updateUi();
 
         document.onkeyup = function(event)
@@ -66,12 +76,21 @@
                 singerImage.src = hangman.currentImageSrc();
                 songName.textContent = hangman.currentSongName();
                 hangman.newGame();
+                if (hangman.isGameWin()) {
+                    window.alert("Congratulations, you won the game!");
+                    location.reload();
+                }
+
+                updateAudio();
             }
-            else if(hangman.isGameOver())
+            else if(hangman.isGameLost())
             {
                 window.alert("Game is Over!\n    _________\n    |         |\n    |         0\n    |        /|\\\n    |        / \\\n    |\n    |");
+                location.reload();
             }
+
             updateUi();
+            player.play();
         }
       </script>
   </body>
